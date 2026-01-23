@@ -1,38 +1,35 @@
-//mergesorted
+//reverse the Linked List in the left and right nodes
 
 import {
-  Node,
   printingNode,
   toLinkedList,
+  Node,
 } from "../LINKED-LIST/utils/utils.js";
 
-let arr1 = [1, 2, 4];
-let arr2 = [1, 3, 4];
+let arr = [1, 2, 3, 4, 5];
 
-let listNode1 = toLinkedList(arr1);
-let listNode2 = toLinkedList(arr2);
+let head = toLinkedList(arr);
 
-function mergesorted(listNode1, listNode2) {
-  let dummy = new Node(0);
-  let curr = dummy;
-  while (listNode1 !== null && listNode2 !== null) {
-    if (listNode1.data < listNode2.data) {
-      curr.next = listNode1;
-      listNode1 = listNode1.next;
-    } else {
-      curr.next = listNode2;
-      listNode2 = listNode2.next;
-    }
-    curr = curr.next;
+function reverseX(head, left, right) {
+  let mock = new Node(-1);
+  mock.next = head;
+  let start = mock;
+  for (let i = 1; i < left; i++) {
+    start = start.next;
   }
-  if (listNode1 !== null) curr.next = listNode1;
-
-  if (listNode2 !== null) curr.next = listNode2;
-
-  return dummy.next;
+  let curr = start.next;
+  let next = null;
+  for (let i = 0; i < right - left; i++) {
+    next = curr.next;
+    curr.next = next.next;
+    next.next = start.next;
+    start.next = next;
+  }
+  return mock.next;
 }
 
-let data = mergesorted(listNode1, listNode2);
-//printing list
-let res = printingNode(data);
-console.log(res);
+head = reverseX(head, 2, 4);
+
+let str = printingNode(head);
+
+console.log(str);
